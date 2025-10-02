@@ -1,0 +1,20 @@
+package service
+
+import (
+	"apiGo/model"
+	"apiGo/repository"
+)
+
+func CreateImovelService(im model.Imovel) (model.Imovel, error){
+
+
+	idImovel, err := repository.InsertImovelRepository(im)
+
+	if err != nil{
+		return model.Imovel{}, err
+	}
+
+	im.Id = idImovel
+
+	return  im, nil
+}

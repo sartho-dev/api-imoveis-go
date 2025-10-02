@@ -3,6 +3,7 @@ package main
 import (
 	"apiGo/config"
 	"apiGo/controller"
+	"apiGo/middlewares"
 	"log"
 	"net/http"
 )
@@ -15,11 +16,15 @@ func main(){
 
 	http.HandleFunc("/", controller.Handler)
 
-	http.HandleFunc("/create", controller.Create)
+	http.HandleFunc("/create/user", controller.Create)
 
+	http.HandleFunc("/login/user", controller.Login)
+
+	http.HandleFunc("/create/imovel", middlewares.AuthMiddleware(controller.CreateImovel))
 
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
+
 
 }
 
