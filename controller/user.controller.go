@@ -2,7 +2,7 @@ package controller
 
 import (
 	"apiGo/model"
-	"database/sql"
+	"apiGo/service"
 	"encoding/json"
 	"net/http"
 )
@@ -19,7 +19,8 @@ func Handler(w http.ResponseWriter, r *http.Request){
 	
 }
 
-func Create(db *sql.DB, w http.ResponseWriter, r * http.Request){
+func Create(w http.ResponseWriter, r * http.Request){
+	
 	var p model.Pessoa
 
 	decod := json.NewDecoder(r.Body)
@@ -31,22 +32,17 @@ func Create(db *sql.DB, w http.ResponseWriter, r * http.Request){
 		
 	}
 
-	result, err := db.Exec("insert into pessoas (nome, email, senha) VALUES (?,?,?)", 
-	p.Nome, p.Email, p.Senha)
+	result, err := service.CreatePessoa(p)
 
 	if err != nil{
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	id, _ := result.LastInsertId()
-
-	p.Id = int(id)
-
 	w.Header().Set("Content-Type", "application/json")
 
 
-	json.NewEncoder(w).Encode(p)
+	json.NewEncoder(w).Encode(result)
 
 
 }

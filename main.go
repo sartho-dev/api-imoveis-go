@@ -15,9 +15,7 @@ func main(){
 
 	http.HandleFunc("/", controller.Handler)
 
-	http.HandleFunc("/create", func(w http.ResponseWriter, r *http.Request) {
-		controller.Create(db, w, r)
-	})
+	http.HandleFunc("/create", controller.Create)
 
 
 
