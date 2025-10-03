@@ -18,3 +18,9 @@ func CreateImovelService(im model.Imovel) (model.Imovel, error){
 
 	return  im, nil
 }
+
+func FilterImovelService(filter model.Filtro) ([]model.Imovel, error){
+
+	return repository.FilterImovelRepository(filter)
+
+}

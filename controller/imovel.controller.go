@@ -32,3 +32,33 @@ func CreateImovel(w http.ResponseWriter, r *http.Request){
 	
 
 }
+
+func FilterImovel(w http.ResponseWriter, r *http.Request){
+	var filter model.Filtro
+
+	decoder := json.NewDecoder(r.Body)
+
+	err := decoder.Decode(&filter)
+
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	imoveis, err := service.FilterImovelService(filter)
+
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+
+	err = json.NewEncoder(w).Encode(imoveis)
+
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+}

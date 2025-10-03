@@ -5,6 +5,7 @@ import (
 	"apiGo/model"
 	"apiGo/repository"
 	"apiGo/utils"
+	"fmt"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -19,6 +20,8 @@ func CreateService(p model.Pessoa) (model.Pessoa, error){
 	}
 
 	p.Senha = string(bytes)
+
+	p.Role = "usuario"
 	
 	id, err := repository.InsertRepository(p)
 
@@ -41,6 +44,8 @@ func LoginService(email string, senha string) (model.Pessoa,model.TokenResponse,
 
     p, err := repository.FindByEmail(db, email)
 
+	fmt.Println(p)
+
 	if err != nil{
 		return model.Pessoa{},  model.TokenResponse{}, err
 	}
@@ -51,9 +56,6 @@ func LoginService(email string, senha string) (model.Pessoa,model.TokenResponse,
 		return model.Pessoa{},  model.TokenResponse{}, err
 	}
 
-	if p.Role == ""{
-		p.Role = "Usuario"
-	}
 
 	token, err := utils.GenerateToken(p.Id, p.Email, p.Role)
 

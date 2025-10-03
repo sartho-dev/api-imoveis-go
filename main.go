@@ -16,11 +16,13 @@ func main(){
 
 	http.HandleFunc("/", controller.Handler)
 
-	http.HandleFunc("/create/user", controller.Create)
+	http.HandleFunc("/criar/usuario", controller.Create)
 
-	http.HandleFunc("/login/user", controller.Login)
+	http.HandleFunc("/login/usuario", controller.Login)
 
-	http.HandleFunc("/create/imovel", middlewares.AuthMiddleware(controller.CreateImovel))
+	http.HandleFunc("/criar/imovel", middlewares.AuthMiddleware(controller.CreateImovel))
+
+	http.HandleFunc("/filtrar/imoveis", controller.FilterImovel)	
 
 
 	log.Fatal(http.ListenAndServe(":8080", nil))

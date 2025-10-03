@@ -38,3 +38,16 @@ type Login struct{
 type TokenResponse struct{
 	Token string `json:"token"`
 }
+
+type Filtro struct{
+	Situacao string `json:"situacao"`
+	Tipo string `json:"tipo"`
+	Estado string `json:"estado"`
+	Cidade string `json:"cidade"`
+	Bairro string `json:"bairro"`
+	De int `json:"de"`
+	Ate int `json:"ate"`
+	Quartos int `json:"quartos"`
+	Vagas int `json:"vagas"`
+	Banheiros int `json:"banheiros"`
+}
