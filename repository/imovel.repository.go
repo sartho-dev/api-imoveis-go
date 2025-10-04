@@ -116,3 +116,25 @@ func FilterImovelRepository(filter model.Filtro) ([]model.Imovel, error){
 
 	
 }
+
+
+
+func DeleteImovelRepository(id int) (int, error){
+	db := config.Connect()
+
+	defer db.Close()
+
+	result, err := db.Exec("delete from imoveis where id = ? ", id)
+
+	if err != nil{
+		return 0, err
+	}
+	rowsAffected, err := result.RowsAffected()
+
+	if err != nil {
+		return 0, err
+	}
+
+	return int(rowsAffected), nil
+
+}

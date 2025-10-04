@@ -62,3 +62,33 @@ func FilterImovel(w http.ResponseWriter, r *http.Request){
 	}
 
 }
+
+func DeleteImovel(w http.ResponseWriter, r *http.Request){
+
+	var id model.DeletarImovel
+
+	decoder := json.NewDecoder(r.Body)
+
+	err := decoder.Decode(&id)
+
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	rowsAffected, err :=service.DeleteImovelService(id)
+
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+
+	err = json.NewEncoder(w).Encode(rowsAffected)
+
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+}

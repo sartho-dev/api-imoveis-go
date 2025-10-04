@@ -24,3 +24,9 @@ func FilterImovelService(filter model.Filtro) ([]model.Imovel, error){
 	return repository.FilterImovelRepository(filter)
 
 }
+
+func DeleteImovelService(im model.DeletarImovel) (int, error){
+
+	return repository.DeleteImovelRepository(im.Id)
+
+}

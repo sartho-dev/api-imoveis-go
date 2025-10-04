@@ -51,3 +51,7 @@ type Filtro struct{
 	Vagas int `json:"vagas"`
 	Banheiros int `json:"banheiros"`
 }
+
+type DeletarImovel struct{
+	Id int `json:"id_imovel"`
+}

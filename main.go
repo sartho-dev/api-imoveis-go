@@ -24,7 +24,8 @@ func main(){
 
 	http.HandleFunc("/filtrar/imoveis", controller.FilterImovel)	
 
-
+	http.HandleFunc("/deletar/imovel", middlewares.AuthMiddleware(controller.DeleteImovel))
+	
 	log.Fatal(http.ListenAndServe(":8080", nil))
 
 
