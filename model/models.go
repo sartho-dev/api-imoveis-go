@@ -51,6 +51,20 @@ type Filtro struct{
 	Vagas int `json:"vagas"`
 	Banheiros int `json:"banheiros"`
 }
+type AtualizarImovel struct{
+	IdImovel int `json:"idimovel"`
+	Estado string `json:"estado"`
+	Cidade string `json:"cidade"`
+	Bairro string `json:"bairro"`
+	Situacao string `json:"situacao"`
+	Tipo string `json:"tipo"`
+	Valor int `json:"valor"`
+	Quartos int `json:"quartos"`
+	Banheiros int `json:"banheiros"`
+	Cozinha int `json:"vagas"`
+	Area int `json:"area"`
+	Descricao string `json:"descricao"`
+}
 
 type DeletarImovel struct{
 	Id int `json:"id_imovel"`

@@ -3,6 +3,8 @@ package repository
 import (
 	"apiGo/config"
 	"apiGo/model"
+	"fmt"
+	"strings"
 )
 
 func InsertImovelRepository(im model.Imovel) (int, error) {
@@ -137,4 +139,80 @@ func DeleteImovelRepository(id int) (int, error){
 
 	return int(rowsAffected), nil
 
+}
+
+func UpdateImovelRepository(imovel model.AtualizarImovel) (err error){
+
+	db := config.Connect()
+
+	defer db.Close()
+
+	fields := []string{}
+	args := []interface{}{}
+
+	if imovel.Estado != ""{
+		fields = append(fields, "estado = ?")
+		args = append(args, imovel.Estado)
+	}
+	if imovel.Cidade != ""{
+		fields = append(fields, "cidade = ?")
+		args = append(args, imovel.Cidade)
+	}
+	if imovel.Bairro != ""{
+		fields = append(fields, "bairro = ?")
+		args = append(args, imovel.Bairro)
+	}
+	if imovel.Situacao != ""{
+		fields = append(fields, "situacao = ?")
+		args = append(args, imovel.Situacao)
+	}
+	if imovel.Tipo != ""{
+		fields = append(fields, "tipo = ?")
+		args = append(args, imovel.Tipo)
+	}
+	if imovel.Valor != 0{
+		fields = append(fields, "valor = ?")
+		args = append(args, imovel.Valor)
+	}
+	if imovel.Quartos != 0{
+		fields = append(fields, "quartos = ?")
+		args = append(args, imovel.Quartos)
+	}
+	if imovel.Banheiros != 0{
+		fields = append(fields, "banheiros = ?")
+		args = append(args, imovel.Banheiros)
+	}
+	if imovel.Cozinha != 0{
+		fields = append(fields, "cozinha = ?")
+		args = append(args, imovel.Cozinha)
+	}
+	if imovel.Area != 0{
+		fields = append(fields, "area = ?")
+		args = append(args, imovel.Area)
+	}
+	if imovel.Descricao != ""{
+		fields = append(fields, "descricao = ?")
+		args = append(args, imovel.Descricao)
+	}
+	
+	query := fmt.Sprintf("update imoveis set %s where id = ?", strings.Join(fields, ", "))
+
+	args = append(args, imovel.IdImovel)
+
+	result, err := db.Exec(query, args...)
+
+	if err != nil{
+		return err
+	}
+
+	rowsAffected, _ := result.RowsAffected()
+
+	if rowsAffected == 0{
+
+		return fmt.Errorf("nenhum registro encontrado")
+
+	}
+	
+
+	return nil
 }
