@@ -141,7 +141,7 @@ func DeleteImovelRepository(id int) (int, error){
 
 }
 
-func UpdateImovelRepository(imovel model.AtualizarImovel) (err error){
+func UpdateImovelRepository(imovel model.AtualizarImovel) (int, error){
 
 	db := config.Connect()
 
@@ -202,17 +202,12 @@ func UpdateImovelRepository(imovel model.AtualizarImovel) (err error){
 	result, err := db.Exec(query, args...)
 
 	if err != nil{
-		return err
+		return 0, err
 	}
 
 	rowsAffected, _ := result.RowsAffected()
 
-	if rowsAffected == 0{
-
-		return fmt.Errorf("nenhum registro encontrado")
-
-	}
 	
 
-	return nil
+	return int(rowsAffected), nil
 }

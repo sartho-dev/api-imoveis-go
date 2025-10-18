@@ -30,3 +30,9 @@ func DeleteImovelService(im model.DeletarImovel) (int, error){
 	return repository.DeleteImovelRepository(im.Id)
 
 }
+
+func UpdateImovelService(im model.AtualizarImovel) (int, error){
+
+	return repository.UpdateImovelRepository(im)
+
+}

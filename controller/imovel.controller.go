@@ -92,3 +92,33 @@ func DeleteImovel(w http.ResponseWriter, r *http.Request){
 	}
 
 }
+
+func UpdateImovel(w http.ResponseWriter, r *http.Request){
+
+	var imovel model.AtualizarImovel
+
+	decoder := json.NewDecoder(r.Body)
+
+	err := decoder.Decode(&imovel)
+
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	rowsAffected, err := service.UpdateImovelService(imovel)
+
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+
+	err = json.NewEncoder(w).Encode(rowsAffected)
+
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+}
